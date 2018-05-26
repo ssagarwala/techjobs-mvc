@@ -37,6 +37,24 @@
     <hr />
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
+    <div th:if="${jobs} and ${jobs.size()}">
+
+        <table>
+            <tr>
+                <td> Position Type</td>
+                <td>Name</td>
+                <td> Employer</td>
+                <td>Location</td>
+                <td>Core Competency</td>
+            </tr>
+            <tr th:each="job, idx : ${jobs}" th:class="${idx.odd} ? 'odd'">
+                <!--working<td th:text="${job}"></td>-->
+                <!--working <td th:text="${job.name}"></td>-->
+                <td th:each="field: ${job}" th:text="${field.value}"></td>
+            </tr>
+        </table>
+
+    </div>
 
 </div>
 
