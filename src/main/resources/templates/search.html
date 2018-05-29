@@ -20,7 +20,10 @@
                         name="searchType"
                         th:id="${column.key}"
                         th:value="${column.key}"
-                        th:checked="${column.key == 'all'}"/>
+                        th:checked="${column.key == checked}"/>
+                <!--When searching, if we select a given field to search within and
+                submit,our choice is forgotten. Modify the view template to keep the
+                previous search field selected when displaying results.-->
                 <label th:for="${column.key}" th:text="${column.value}"></label>
             </span>
 
@@ -38,8 +41,8 @@
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
     <div th:if="${jobs} and ${jobs.size()}">
-
-        <table>
+        <h1 th:text="${jobs.size()}"></h1> <h1>Result(s)</h1>
+        <table class="job-listing">
             <tr>
                 <td> Position Type</td>
                 <td>Name</td>
@@ -50,7 +53,20 @@
             <tr th:each="job, idx : ${jobs}" th:class="${idx.odd} ? 'odd'">
                 <!--working<td th:text="${job}"></td>-->
                 <!--working <td th:text="${job.name}"></td>-->
-                <td th:each="field: ${job}" th:text="${field.value}"></td>
+                <!-- The field names in the tables displaying full job data are not capitalized.
+                Fix this.(Hint: We capitalize the title string in multiple templates, so have a
+                look around.)
+               <td th:each="field: ${job}" th:text="${field.value}"></td>
+               <td><a th:href="@{/list/jobs(column=${column},value=${item})}" th:text="${#strings.capitalizeWords(item)}"></a></td>
+              <td><a th:href="@{/search/results(
+              -->
+               <!--working <td th:each="field: ${job}" th:text="${#strings.capitalizeWords(field.value)}"></td>-->
+
+                <td th:each="field: ${job}">
+                <a th:text="${#strings.capitalizeWords(field.value)}"
+                        th:href="@{/search/results/(searchType='all',searchTerm=${field.value})}"></a>
+                </td>
+
             </tr>
         </table>
 

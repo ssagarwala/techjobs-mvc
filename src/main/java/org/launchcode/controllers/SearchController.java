@@ -25,14 +25,33 @@ public class SearchController {
     // TODO #1 - Create handler to process search request and display results
 
     @RequestMapping(value="results")
-    public String search(Model model,String searchType, String searchTerm){
+     public String search(Model model,String searchType, String searchTerm){
+
         model.addAttribute("columns", ListController.columnChoices);
-        ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
-        model.addAttribute("title", "Jobs with " + ListController.columnChoices.get(searchType) + ": " + searchTerm);
-        model.addAttribute("jobs", jobs);
-        System.out.println("column is "+ searchType);
-        System.out.println("searh Term "+searchTerm);
-        System.out.println("REsults size"+ jobs.size());
+        if(searchType.equals("all")){
+            ArrayList<HashMap<String, String>> jobs = JobData.findByValue(searchTerm);
+            model.addAttribute("title", "Jobs with " + ListController.columnChoices.get(searchType) + ": " + searchTerm);
+            model.addAttribute("jobs", jobs);
+            //added checked attribute to keep the field selected by the user.When searching,
+            // if we select a given field to search within and submit, our choice is forgotten.
+            // Modify the view template to keep the previous search field selected when
+            // displaying results.
+            model.addAttribute("checked", searchType);
+            model.addAttribute("searchType",searchType);
+            model.addAttribute("searchTerm", searchTerm);
+        }
+        else {
+            ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(searchType, searchTerm);
+            model.addAttribute("title", "Jobs with " + ListController.columnChoices.get(searchType) + ": " + searchTerm);
+            model.addAttribute("jobs", jobs);
+            //added checked attribute to keep the field selected by the user.When searching,
+            // if we select a given field to search within and submit, our choice is forgotten.
+            // Modify the view template to keep the previous search field selected when displaying results.
+            model.addAttribute("checked", searchType);
+            model.addAttribute("searchType",searchType);
+            model.addAttribute("searchTerm", searchTerm);
+        }
+
         return "search";
     }
 

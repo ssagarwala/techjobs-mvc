@@ -47,6 +47,7 @@ public class ListController {
             ArrayList<HashMap<String, String>> jobs = JobData.findAll();
             model.addAttribute("title", "All Jobs");
             model.addAttribute("jobs", jobs);
+
             return "list-jobs";
         } else {
             ArrayList<String> items = JobData.findAll(column);
@@ -77,7 +78,7 @@ public class ListController {
         ArrayList<HashMap<String, String>> jobs = JobData.findByColumnAndValue(column, value);
         model.addAttribute("title", "Jobs with " + columnChoices.get(column) + ": " + value);
         model.addAttribute("jobs", jobs);
-
+        //System.out.println("Total jobs is"+ jobs.size());
         return "list-jobs";
     }
 }

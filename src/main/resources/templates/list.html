@@ -38,7 +38,7 @@ template needs some additional work.
         <ul>
             <li th:each="column : ${columns}">
                 <a th:href="@{/list/values(column=${column.key})}"
-                    th:text="${column.value}"></a>
+                   th:text="${#strings.capitalizeWords(column.value)}"></a>
             </li>
         </ul>
     </div>
