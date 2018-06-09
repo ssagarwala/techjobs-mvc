@@ -40,8 +40,10 @@
     <hr />
 
     <!-- TODO #2 - Loop over jobs map to display all job fields -->
+    <h1  th:if="${jobs.size()>=0}"
+         th:text="${jobs.size()}"></h1> <h1>Result(s)</h1>
     <div th:if="${jobs} and ${jobs.size()}">
-        <h1 th:text="${jobs.size()}"></h1> <h1>Result(s)</h1>
+       <!-- <h1 th:text="${jobs.size()}"></h1> <h1>Result(s)</h1>-->
         <table class="job-listing">
             <tr>
                 <td> Position Type</td>
